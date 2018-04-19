@@ -11,23 +11,29 @@ import { connect } from 'react-redux'
 
 import { List as list } from 'immutable'
 
+import { openModal, closeModal } from '../../actions/index' //para llamar a los creadores de acciones
+
+import { bindActionCreators } from 'redux'
+
 class Home extends Component {
   state = {
-    modalVisible: false,
+    // modalVisible: false,
     handleError: false
   }
 
-  handleOpenModal = (media) => {
-    this.setState({
-      modalVisible: true,
-      media
-    })
+  handleOpenModal = (id) => {
+    this.props.actions.openModal(id)
+    // this.setState({
+    //   modalVisible: true,
+    //   media
+    // })
   }
 
   handleCloseModal = (event) => {
-    this.setState({
-      modalVisible: false
-    })
+    // this.setState({
+    //   modalVisible: false,
+    // })
+    this.props.actions.closeModal()
   }
 
   render() {
@@ -41,13 +47,14 @@ class Home extends Component {
            search={this.props.search}
           />
           {
-            this.state.modalVisible &&
+            this.props.modal.get('visibility') &&
             <ModalContainer>
              <Modal handleClick={this.handleCloseModal}>
               <VideoPlayer 
                 autoplay
-                src={this.state.media.src}
-                title={this.state.media.title}
+                id={this.props.modal.get('mediaId')}
+                // src={this.state.media.src}
+                // title={this.state.media.title}
               />
              </Modal>
             </ModalContainer>
@@ -78,11 +85,21 @@ function mapStateToProps(state, props) {
     )).toList()
   }
 
+  // console.log(state)
+
   return {
     categories: categories,
-    search: searchResults
+    search: searchResults,
+    modal: state.get('modal'),
   }
 
 }
 
-export default connect(mapStateToProps)(Home)
+function mapDispatchToProps (dispatch) {
+  return {
+    // actions: bindActionCreators(acciones, dispatch)
+    actions: bindActionCreators({ openModal, closeModal }, dispatch)
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home)

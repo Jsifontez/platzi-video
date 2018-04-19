@@ -9,7 +9,7 @@ const initialState = fromJS({
 
 function data(state = initialState, action) {
   switch (action.type) {
-    case 'SEARCH_VIDEO': {
+    case 'SEARCH_ENTITIES': {
       // forma con immutable de consumir el search
 
       return state.set('search', action.payload.query)

@@ -19,6 +19,7 @@ function Categories(props) {
               src    = {item.get('src')}
               id     = {item.get('id')}
               key    = {item.get('id')} 
+              openModal = {props.handleOpenModal}
             />
           )
         })
