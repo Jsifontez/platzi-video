@@ -8,6 +8,10 @@ import reducer from '../reducers/index.js'
 
 import { Map as map} from 'immutable'
 
+// middlewares de redux
+import logger from 'redux-logger'
+import { composeWithDevTools } from 'redux-devtools-extension'
+
 // console.log(data)
 
 // const initialState = {
@@ -42,18 +46,20 @@ import { Map as map} from 'immutable'
 
   //ES6 way
 
-const logger = ({getState, dispatch}) => next => action => {
-  console.log('estado anterior:', getState().toJS())
-  console.log('enviado acción', action)
-  const value = next(action)
-  console.log('nuevo estado:', getState().toJS())
-  return value
-}
+// const logger = ({getState, dispatch}) => next => action => {
+//   console.log('estado anterior:', getState().toJS())
+//   console.log('enviado acción', action)
+//   const value = next(action)
+//   console.log('nuevo estado:', getState().toJS())
+//   return value
+// }
 
 const store = createStore(
   reducer,
   map(),
-  applyMiddleware(logger)
+  composeWithDevTools(
+    applyMiddleware(logger)
+  )
   // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 )
 
