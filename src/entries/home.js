@@ -12,6 +12,8 @@ import { Map as map} from 'immutable'
 import logger from 'redux-logger'
 import { composeWithDevTools } from 'redux-devtools-extension'
 
+import ReduxThunk from 'redux-thunk' //middleware para manejar acciones asincronas
+
 // console.log(data)
 
 // const initialState = {
@@ -58,7 +60,10 @@ const store = createStore(
   reducer,
   map(),
   composeWithDevTools(
-    applyMiddleware(logger)
+    applyMiddleware(
+      logger,
+      ReduxThunk
+    )
   )
   // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 )
