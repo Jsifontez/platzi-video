@@ -11,7 +11,7 @@ import { connect } from 'react-redux'
 
 import { List as list } from 'immutable'
 
-import { openModal, closeModal } from '../../actions/index' //para llamar a los creadores de acciones
+import * as actions from '../../actions/index' //para llamar a los creadores de acciones
 
 import { bindActionCreators } from 'redux'
 
@@ -45,6 +45,7 @@ class Home extends Component {
            categories={this.props.categories} 
            handleOpenModal={this.handleOpenModal}
            search={this.props.search}
+           isLoading={this.props.isLoading}
           />
           {
             this.props.modal.get('visibility') &&
@@ -91,6 +92,7 @@ function mapStateToProps(state, props) {
     categories: categories,
     search: searchResults,
     modal: state.get('modal'),
+    isLoading: state.get('isLoading').get('active')
   }
 
 }
@@ -98,7 +100,7 @@ function mapStateToProps(state, props) {
 function mapDispatchToProps (dispatch) {
   return {
     // actions: bindActionCreators(acciones, dispatch)
-    actions: bindActionCreators({ openModal, closeModal }, dispatch)
+    actions: bindActionCreators(actions, dispatch)
   }
 }
 

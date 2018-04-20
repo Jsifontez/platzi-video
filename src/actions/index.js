@@ -1,4 +1,10 @@
-import { CLOSE_MODAL, OPEN_MODAL, SEARCH_ENTITIES, SEARCH_ASYNC_ENTITIES } from '../action-types/index'
+import { 
+  CLOSE_MODAL, 
+  OPEN_MODAL, 
+  SEARCH_ENTITIES, 
+  SEARCH_ASYNC_ENTITIES, 
+  IS_LOADING 
+} from '../action-types/index'
 
 export function openModal (mediaId) {
   return {
@@ -15,6 +21,15 @@ export function closeModal () {
   }
 }
 
+export function isLoading (value) {
+  return {
+    type: IS_LOADING,
+    payload: {
+      value
+    }
+  }
+}
+
 export function searchEntities (query) {
   return {
     type: SEARCH_ENTITIES,
@@ -26,12 +41,10 @@ export function searchEntities (query) {
 
 export function searchAsyncEntities (query) {
   return (dispatch) => {
-    // XHR
-    // trae
-    // fetch()
-    // axios
-    // Luego de que se ejecute la acción asíncrona se usa el dispatch con la otra acción
-    setTimeout( () => {
+    dispatch(isLoading(true))
+
+   setTimeout(()=> {
+      dispatch(isLoading(false))
       dispatch(searchEntities(query))
     }, 5000)
   }
